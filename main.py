@@ -36,10 +36,6 @@ async def on_message(message):
     if message.content.startswith('!тык'):
         await message.channel.send('!тык')
 
-for k, v in os.environ.items():
-    #print(f'{k}={v}')
-    pass
-print("----------------------")
 
 load_dotenv()
 client.run(os.getenv('TOKEN'))
