@@ -36,6 +36,12 @@ async def on_message(message):
     if message.content.startswith('!тык'):
         await message.channel.send('!тык')
 
+@client.event
+async  def on_message_edit(before, after):
+    await before.channel.send('в этом канале  отредактировали сообщение')
+    print(type(before))
+
+
 
 load_dotenv()
 client.run(os.getenv('TOKEN'))
