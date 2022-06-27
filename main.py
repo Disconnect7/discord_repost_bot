@@ -1,9 +1,8 @@
-import discord
 import os
 from discord.ext import commands
 from dotenv import load_dotenv
 
-#client = discord.Client()
+#client = discord.Client() #import discord
 client = commands.Bot(command_prefix='!')
 
 
@@ -23,16 +22,26 @@ async def abc(ctx, arg1=None, arg2=None):
 
 @client.command(name="Дисконнект")
 async def bf(ctx, *, args):
-    if (ctx.message.author.id == 478866202371031040):
+    if (ctx.message.author.id == 478866202371031040): # скопировать ID пользователя через ПКМ
         await ctx.send(f"Определённо ты, {ctx.message.author}")
     else:
         await ctx.send("Я не знаю")
         await ctx.send(f"Your id = {str(ctx.message.author.id)}\n"
                        f"ctx.message.author.id == id: {ctx.message.author.id == 478866202371031040}")
 
-@client.command(name="asdasdasdasdasasda")
-async def bf(ctx, *, args):
-    pass
+@client.command(name="meme")
+async def bf(ctx):
+    m = "https://cdn.discordapp.com/attachments/4383858" \
+         "99873763328/990366770172944444/unknown.png"
+    await ctx.send(m)
+
+
+@client.command(name="send")
+async def bf(ctx):
+    channal = client.get_channel(738006547556204544) # скопировать ID текстового канала с ботом через ПКМ
+    await channal.send(f"asdsadasda")
+
+
 
 
 # _____________________________________________________________________________
