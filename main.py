@@ -1,23 +1,3 @@
-"""
-import os
-
-from discord.ext import commands
-from dotenv import load_dotenv
-
-
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-
-bot = commands.Bot(command_prefix='!')
-
-@bot.command(name='сасат')
-async def sasat_function(ctx):
-
-    response = "сасат! sasat? сасатъ, САСАТ, сасат?!"
-    await ctx.send(response)
-
-bot.run(TOKEN)
-"""
 import discord
 import os
 from discord.ext import commands
@@ -41,9 +21,26 @@ async def abc(ctx, arg1=None, arg2=None):
     else:
         await ctx.send("just bruh command")
 
+@client.command(name="Дисконнект")
+async def bf(ctx, *, args):
+    if (ctx.message.author.id == 478866202371031040):
+        await ctx.send(f"Определённо ты, {ctx.message.author}")
+    else:
+        await ctx.send("Я не знаю")
+        await ctx.send(f"Your id = {str(ctx.message.author.id)}\n"
+                       f"ctx.message.author.id == id: {ctx.message.author.id == 478866202371031040}")
+
+@client.command(name="asdasdasdasdasasda")
+async def bf(ctx, *, args):
+    pass
+
+
+# _____________________________________________________________________________
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
+
 
 """
 # on_message() перебивает по приоритету @client.command()
