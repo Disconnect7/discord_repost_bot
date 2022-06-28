@@ -1,11 +1,12 @@
 import os
+import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-#client = discord.Client() #import discord
+# client = discord.Client() #import discord
 client = commands.Bot(command_prefix='!')
 
-
+"""
 @client.command(name="id")
 async def id(ctx):
     message = ctx.message
@@ -38,20 +39,15 @@ async def bf(ctx):
 
 @client.command(name="send")
 async def bf(ctx):
-    channal = client.get_channel(738006547556204544) # скопировать ID текстового канала с ботом через ПКМ
-    await channal.send(f"asdsadasda")
+    channal = client.get_channel(991335084986744932) # скопировать ID текстового канала с ботом через ПКМ
+    await channal.send(f"sendind messege in text channal with ID 991335084986744932")
 
+@client.command(name="TypeOfChannal")
+async def bf(ctx):
+    await ctx.send(f"ctx.message.channel = {ctx.message.channel}")
+    await ctx.send(f"ctx.message.channel.type = {ctx.message.channel.type }")
+    
 
-
-
-# _____________________________________________________________________________
-
-@client.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
-
-
-"""
 # on_message() перебивает по приоритету @client.command()
 # :sadporo:
 
@@ -62,12 +58,40 @@ async def on_message(message):
 
     if message.content.startswith('!тык'):
         await message.channel.send('!тык')
-"""
+
 
 @client.event
 async def on_message_edit(before, after):
     await before.channel.send('в этом канале  отредактировали сообщение')
     print(type(before))
+"""
+
+
+# репостит в конкретный канал по команде
+@client.command(name="repost")
+async def bf(ctx, *, args):
+    if (ctx.message.author.id == 478866202371031040): # скопировать ID пользователя через ПКМ
+        channal = client.get_channel(991335084986744932)
+        await channal.send(ctx.message.content)
+
+    else:
+        await ctx.send(f"Вашего ID = {ctx.message.author.id} нет в списке допущенных для щитпостинга")
+
+@client.event
+async def on_message(message):
+    trusted_author = (message.author.id == 478866202371031040)
+    is_DM = (message.channel.type == discord.enums.ChannelType.private)
+    if (trusted_author and is_DM):
+        # await message.channel.send(f'message  from trusted_author and is_DM ')
+        await message.channel.send(f'message reposted')
+
+        channal = client.get_channel(991335084986744932)
+        await channal.send(message.content)
+
+
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
 
 
 load_dotenv()
