@@ -49,7 +49,7 @@ async def bf(ctx):
     await ctx.send(f"ctx.message.channel = {ctx.message.channel}")
     await ctx.send(f"ctx.message.channel.type = {ctx.message.channel.type }")
 
-
+'''
 # on_message() перебивает по приоритету @client.command()
 # :sadporo:
 
@@ -60,7 +60,7 @@ async def on_message(message):
 
     if message.content.startswith('!тык'):
         await message.channel.send('!тык')
-
+'''
 
 @client.event
 async def on_message_edit(before, after):
@@ -74,3 +74,5 @@ async def on_ready():
 
 
 client.run(os.getenv('TOKEN'))
+
+print(123)
