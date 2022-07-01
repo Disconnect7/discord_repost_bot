@@ -1,6 +1,7 @@
 import os
 import discord
 import json
+import asyncio
 from discord.ext import commands
 from dotenv import load_dotenv
 load_dotenv()
@@ -33,27 +34,26 @@ async def on_message(message):
 
     if (trusted_author and is_DM):
 
+        await respond_to(message, response=f"через 5 секунд будет репост")
+        await asyncio.sleep(5)
         c = 0
 
         for channel_id in channels_to_repost.keys():
 
-            channel = client.get_channel(int(channel_id))
-            # тык # channel = client.get_channel(991335084986744932)
+            # channel = client.get_channel(int(channel_id))
+            channel = client.get_channel(991335084986744932)
 
             try:  # пеерсылаем сообщение, поднимем счётчик пересланых сообщений
                 await channel.send(message.content)
                 c += 1
             except:
-                await message.channel.send(f"Error: can't send to: "
-                                           f"'{channel.guild}   --->   {channel}' channel")
+                await respond_with_error(message, channel, channel_id)
 
-        await message.channel.send(f'message reposted to {c} channels')
-
-
+        await respond_to(message, response=f'message reposted to {c} channels')
 
     elif(not trusted_author and is_DM):
-        await message.channel.send(f'Вашего ID нет в моём списке '
-                                   f'допущенных к щитпостингу')
+        await respond_to(message, response=f'Вашего ID нет в моём списке '
+                                     f'допущенных к щитпостингу' )
 
 
 def author_in_trusted_list(author):
@@ -63,15 +63,26 @@ def author_in_trusted_list(author):
         return False
 
 
-def respond_to(message, response):
+async def respond_to(message, response):
+    # отправляет сообщение {response} в канал где находится {message}
     await message.channel.send(response)
+
+
+async def respond_with_error(message, channel, channel_id):
+    # просто упаковка большого и бесполезного кода в отдельную функцию
+
+    try:
+        await respond_to(message, response=f"Error: can't send to: "
+                                           f"'{channel.guild}   --->   {channel}' channel")
+    except:
+        await respond_to(message, response=f"Error: can't send to: "
+                                           f"'{channel}' channel with id = {channel_id}")
 
 
 # ______________________________________________
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-
 
 
 file = open('id_users.json', 'r')
