@@ -11,16 +11,12 @@ client = commands.Bot(command_prefix='!')
 
 
 
+#async def bf(ctx, *, args): для многих аргументов
 
 # репостит в конкретный канал по команде
-@client.command(name="repost")
-async def bf(ctx, *, args):
-    if (ctx.message.author.id == 478866202371031040): # скопировать ID пользователя через ПКМ
-        channel = client.get_channel(991335084986744932)
-        await channel.send(ctx.message.content)
-
-    else:
-        await ctx.send(f"Вашего ID = {ctx.message.author.id} нет в списке допущенных для щитпостинга")
+@client.command(name="тык")
+async def bf(ctx):
+    await ctx.send("!тык")
 
 
 @client.event
@@ -55,6 +51,8 @@ async def on_message(message):
         await respond_to(message, response=f'Вашего ID нет в моём списке '
                                      f'допущенных к щитпостингу' )
 
+    # передать сообщение парсеру комманд
+    await client.process_commands(message)
 
 def author_in_trusted_list(author):
     if str(author) in trusted_users.keys():
