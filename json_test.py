@@ -1,16 +1,23 @@
 import json
 
-dictionary ={
+dictionary8 ={
     "copy_your_discord_id_there" : "user nickname",
     "or_as_many_other_ID_as_you_want" : "(optional)",
     "478866202371031040" : "disconnect"
 }
 
+dictionary ={
+    "991335084986744932" : "тык Астрокреветки",
+    "237301400676073484" : "баскетбольный клуб"
+}
+
 json_object = json.dumps(dictionary, indent=0)
 
+"""
 # Writing to sample.json
-with open("id_users.json", "w") as outfile:
+with open("channels_to_repost.json", "w") as outfile:
     outfile.write(json_object)
+"""
 
 # Opening JSON file
 with open('id_users.json', 'r') as openfile:
