@@ -9,6 +9,9 @@ load_dotenv()
 client = commands.Bot(command_prefix='!')
 
 
+# async def function_name(ctx, *, args): для многих аргументов
+
+
 @client.command(name="id")
 async def id(ctx):
     message = ctx.message
