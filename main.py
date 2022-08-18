@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 
 client = commands.Bot(command_prefix='!')
 repost_delay_s = 10
+message_history_list = []
+
+
 
 # region рабочие методы
 
@@ -16,6 +19,27 @@ repost_delay_s = 10
 @client.command(name="тык")
 async def tik(ctx):
     await ctx.send("!тык")\
+
+
+@client.command(name="delete")
+async def clear_function(ctx, number_of_messages_to_delete=None):
+    n = number_of_messages_to_delete
+
+    if n == "all":
+        for message in message_history_list:
+            await message.delete()
+
+        await ctx.author.send(f"!delete command was executed for 4 last indexes")
+
+    elif n is None:
+        L = last_index = len(message_history_list) - 1
+
+        for index in range(L, L-4, -1):
+            await message_history_list[index].delete()
+
+        await ctx.author.send(f"!delete command was executed for 4 last indexes")
+
+
 
 
 @client.command(name="repost")
@@ -35,12 +59,14 @@ async def repost(ctx):
 
             this_channel = message.channel
             channel = client.get_channel(int(channel_id))
-            # channel = client.get_channel(991335084986744932)
+            #channel = client.get_channel(991335084986744932)
             if this_channel == channel:
                 pass
             else:
                 try:
-                    await channel.send(message.content)
+                    msg = await channel.send(message.content)
+                    #msg = await channel.send(f"tmp meaasge count = {c}")
+                    message_history_list.append(msg)
                     c += 1
                 except:
                     pass
@@ -72,7 +98,7 @@ async def on_message(message):
         await bully_ZUM(message)
         return
 
-    #trusted_author = author_in_trusted_list(message.author.id)
+    # сообщение было написано боту в личку
     is_DM = (message.channel.type == discord.enums.ChannelType.private)
 
     if trusted_author(message) and is_DM:
@@ -116,12 +142,23 @@ def trusted_author(message):
         return False
 
 
-def author_in_trusted_list(author):
-    if str(author) in trusted_users.keys():
-        return True
-    else:
-        return False
+def repost_message_in_all_unmuted_channals():
+    """
+    repost messages,
+    and add a list of  [ms1, ms2, ms3 ...] in the end of message_history_list
 
+    bebebe be bebebebe
+    """
+    pass
+
+def show_list_of_servers_to_repost():
+    """
+    print numbered list of "unmuted" servers/channels
+    {repost_message_in_all_unmuted_channals}
+
+    (in which ones can repost messages now)
+    """
+    pass
 
 async def respond_to(message, response):
     # отправляет сообщение {response} в канал где находится {message}
@@ -171,6 +208,13 @@ channels_to_repost = json.load(file)
 file.close()
 
 load_dotenv()
-client.run(os.getenv('TOKEN'))
+#client.run(os.getenv('TOKEN'))
 
 # endregion
+
+if __name__ == '__main__':
+    plm = os.getenv("ПЕЛЬМЕНИ")
+
+
+    print(type(plm))
+    print(plm)
