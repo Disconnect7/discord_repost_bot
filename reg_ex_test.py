@@ -1,7 +1,6 @@
 import re
 
 
-
 token = []
 users_list = []
 text_channels = []
@@ -14,7 +13,6 @@ def distribute_data(data_type, content):
             token.append(content)
         except ValueError:
             print(f"Error. TOKEN value in  settings = {content}, can no append this to list")
-
 
     elif data_type == "USER_ID":
         try:
@@ -29,8 +27,7 @@ def distribute_data(data_type, content):
             print(f"TEXT_CHANNEL_ID should be integer, instead of = {content}")
 
 
-
-def parse_settins_file():
+def parse_settins_file(debug=False):
     f = open("settings.txt", encoding="utf-8", mode="r")
 
     for line in f:
@@ -56,23 +53,13 @@ def parse_settins_file():
         if len(my_list) == 1:
             continue
 
-
-        #print(my_list, end="\n")
-
+        if debug:
+            print(my_list)
 
         distribute_data(data_type=my_list[0],
                         content=my_list[1])
     f.close()
 
 
-
-
-
 if __name__ == '__main__':
-    parse_settins_file()
-
-    for el in [token, users_list, text_channels]:
-        #for data in el:
-           # print(data)
-        pass
-
+    parse_settins_file(debug=True)

@@ -208,7 +208,7 @@ channels_to_repost = json.load(file)
 file.close()
 
 load_dotenv()
-#client.run(os.getenv('TOKEN'))
+client.run(os.getenv('TOKEN'))
 
 # endregion
 
