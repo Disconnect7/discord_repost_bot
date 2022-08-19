@@ -181,6 +181,7 @@ def is_ZUM(message):
         return False
 
 
+
 async def bully_ZUM(message):
     if random.random() < 0.13:
         await respond_to(message, response=f"Зум - Пидрила опять опозорился")
