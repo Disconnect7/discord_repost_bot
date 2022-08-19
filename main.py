@@ -1,7 +1,7 @@
 import discord
 import asyncio
 import random
-import my_file_parser
+import my_file_parser as fp
 from discord.ext import commands
 
 
@@ -195,37 +195,15 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
 
-#достаём токен, полльзователей, и текстовые каналы из файла с настройками
-my_file_parser.parse_settins_file()
+# достаём токен, полльзователей, и текстовые каналы из файла с настройками
+fp.parse_settins_file()
 
 
-trusted_users = my_file_parser.users_list
-channels_to_repost = my_file_parser.text_channels
-token = my_file_parser.token[0]
-
-print(channels_to_repost)
-print(type(channels_to_repost[0]))
-
-print(trusted_users)
-print(type(trusted_users[0]))
-
-
-"""
-# загружаем ID юзеров бота из файла
-file = open('id_users.json', 'r')
-trusted_users = json.load(file)
-file.close()
-
-
-
-# загргужаем ID каналов куда будем репостить мемы
-file = open('channels_to_repost.json', 'r')
-channels_to_repost = json.load(file)
-file.close()
-"""
+trusted_users =      fp.users_list
+channels_to_repost = fp.text_channels
+token =              fp.token[0]
 
 # запускаем бота
-
 client.run(token)
 
 
