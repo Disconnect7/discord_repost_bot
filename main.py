@@ -3,8 +3,9 @@ import discord
 import json
 import asyncio
 import random
+import my_file_parser
 from discord.ext import commands
-from dotenv import load_dotenv
+
 
 
 client = commands.Bot(command_prefix='!')
@@ -197,24 +198,39 @@ async def bully_ZUM(message):
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
+
+#достаём токен, полльзователей, и текстовые каналы из файла с настройками
+my_file_parser.parse_settins_file()
+
+
+trusted_users = my_file_parser.users_list
+channels_to_repost = my_file_parser.text_channels
+token = my_file_parser.token[0]
+
+"""
 # загружаем ID юзеров бота из файла
 file = open('id_users.json', 'r')
 trusted_users = json.load(file)
 file.close()
 
+
+
 # загргужаем ID каналов куда будем репостить мемы
 file = open('channels_to_repost.json', 'r')
 channels_to_repost = json.load(file)
 file.close()
+"""
 
-load_dotenv()
-client.run(os.getenv('TOKEN'))
+# запускаем бота
+
+client.run(token)
+
 
 # endregion
 
-if __name__ == '__main__':
-    plm = os.getenv("ПЕЛЬМЕНИ")
+
+token = my_file_parser.token[0]
+print(token)
 
 
-    print(type(plm))
-    print(plm)
+

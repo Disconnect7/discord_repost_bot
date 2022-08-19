@@ -6,6 +6,10 @@ users_list = []
 text_channels = []
 
 
+def print_asd():
+    print("asd")
+
+
 def distribute_data(data_type, content):
 
     if data_type == "TOKEN":
