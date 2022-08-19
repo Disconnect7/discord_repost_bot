@@ -1,6 +1,4 @@
-import os
 import discord
-import json
 import asyncio
 import random
 import my_file_parser
@@ -41,8 +39,6 @@ async def clear_function(ctx, number_of_messages_to_delete=None):
         await ctx.author.send(f"!delete command was executed for 4 last indexes")
 
 
-
-
 @client.command(name="repost")
 async def repost(ctx):
     """
@@ -56,10 +52,10 @@ async def repost(ctx):
 
     if trusted_author(message):
         c = 0
-        for channel_id in channels_to_repost.keys():
+        for channel_id in channels_to_repost:
 
             this_channel = message.channel
-            channel = client.get_channel(int(channel_id))
+            channel = client.get_channel(channel_id)
             #channel = client.get_channel(991335084986744932)
             if this_channel == channel:
                 pass
@@ -108,9 +104,9 @@ async def on_message(message):
         await asyncio.sleep(10)
         c = 0
 
-        for channel_id in channels_to_repost.keys():
+        for channel_id in channels_to_repost:
 
-            channel = client.get_channel(int(channel_id))
+            channel = client.get_channel(channel_id)
             # channel = client.get_channel(991335084986744932)
 
             try:  # пеерсылаем сообщение, поднимем счётчик пересланых сообщений
@@ -121,7 +117,7 @@ async def on_message(message):
 
         await respond_to(message, response=f'message reposted to {c} channels')
 
-    elif(not trusted_author and is_DM):
+    elif (not trusted_author and is_DM):
         await respond_to(message, response=f'Вашего ID нет в моём списке '
                                      f'допущенных к щитпостингу' )
 
@@ -137,7 +133,7 @@ async def on_message(message):
 def trusted_author(message):
     author = message.author.id
 
-    if str(author) in trusted_users.keys():
+    if author in trusted_users:
         return True
     else:
         return False
@@ -207,6 +203,13 @@ trusted_users = my_file_parser.users_list
 channels_to_repost = my_file_parser.text_channels
 token = my_file_parser.token[0]
 
+print(channels_to_repost)
+print(type(channels_to_repost[0]))
+
+print(trusted_users)
+print(type(trusted_users[0]))
+
+
 """
 # загружаем ID юзеров бота из файла
 file = open('id_users.json', 'r')
@@ -227,10 +230,3 @@ client.run(token)
 
 
 # endregion
-
-
-token = my_file_parser.token[0]
-print(token)
-
-
-
